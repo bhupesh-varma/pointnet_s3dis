@@ -4,6 +4,9 @@ import torch.optim as optim
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
+from src.models.pointnet import feature_transform_regularizer 
+from src.utils.metrics import calculate_accuracy, calculate_iou
+
 def train_epoch(model, train_loader, optimizer, criterion, device, feature_transform=False):
     model.train()
     total_loss = 0

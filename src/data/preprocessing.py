@@ -128,8 +128,10 @@ def preprocess_s3dis(data_dir='./s3dis_data/processed'):
     for i, anno_path in enumerate(anno_paths):
         print(f'Processing ({i+1}/{len(anno_paths)}): {anno_path}')
 
-        elements = anno_path.split('/')
-        out_filename = elements[-3] + '_' + elements[-2]  # Area_1_hallway_1
+        # WINDOWS-SAFE: use os.path instead of manual split
+        room = os.path.basename(os.path.dirname(anno_path))                  # e.g. "hallway_1"
+        area = os.path.basename(os.path.dirname(os.path.dirname(anno_path))) # e.g. "Area_1"
+        out_filename = f"{area}_{room}"                                      # "Area_1_hallway_1"
         out_filename = os.path.join(output_folder, out_filename)
 
         if os.path.isfile(f'{out_filename}_point.npy'):
@@ -142,5 +144,12 @@ def preprocess_s3dis(data_dir='./s3dis_data/processed'):
         except Exception as e:
             print(f'Error processing {anno_path}: {e}')
 
+
     print("Preprocessing completed!")
     print(f"Processed files are saved in: {output_folder}")
+
+if __name__ == "__main__":
+    # Make sure we see where we are
+    import os
+    print("Running preprocessing from:", os.getcwd())
+    preprocess_s3dis('./s3dis_data/processed')
