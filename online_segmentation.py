@@ -5,7 +5,7 @@ import numpy as np
 import torch
 from neo4j import GraphDatabase
 
-from pointnet_s3dis.src.models.pointnet import PointNetSegmentation
+from backend.pointnet_s3dis.src.models.pointnet import PointNetSegmentation
 
 # --------------------------- Config ---------------------------
 
